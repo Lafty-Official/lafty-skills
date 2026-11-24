@@ -1,0 +1,14 @@
+{
+  "name": "lafty",
+  "owner": {
+    "name": "Lafty"
+  },
+  "description": "라프티(Lafty) 작품을 만드는 AI 스킬",
+  "plugins": [
+    {
+      "name": "lafty",
+      "source": "./plugins/lafty",
+      "description": "소설 쓰기(lafty-novel)와 라프티 작품 파일 만들기(lafty-studio)"
+    }
+  ]
+}

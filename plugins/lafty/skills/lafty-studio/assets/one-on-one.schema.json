@@ -1,0 +1,102 @@
+{
+  "$defs": {
+    "ChapterFloorBody": {
+      "properties": {
+        "stage": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Stage",
+          "type": "string"
+        },
+        "tone": {
+          "default": "",
+          "maxLength": 100,
+          "title": "Tone",
+          "type": "string"
+        },
+        "chapter_id": {
+          "maxLength": 64,
+          "title": "Chapter Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage",
+        "chapter_id"
+      ],
+      "title": "ChapterFloorBody",
+      "type": "object"
+    },
+    "FloorBody": {
+      "properties": {
+        "stage": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Stage",
+          "type": "string"
+        },
+        "tone": {
+          "default": "",
+          "maxLength": 100,
+          "title": "Tone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage"
+      ],
+      "title": "FloorBody",
+      "type": "object"
+    }
+  },
+  "description": "The work's 1:1: on or off, how it begins (a card opening's id, \"none\", or unset for the\ndefault), where the story's stages land among the card's, and its floors.",
+  "properties": {
+    "enabled": {
+      "default": true,
+      "title": "Enabled",
+      "type": "boolean"
+    },
+    "opening": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Opening"
+    },
+    "card_stages": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "maxProperties": 8,
+      "title": "Card Stages",
+      "type": "object"
+    },
+    "chapters": {
+      "items": {
+        "$ref": "#/$defs/ChapterFloorBody"
+      },
+      "maxItems": 12,
+      "title": "Chapters",
+      "type": "array"
+    },
+    "ended": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FloorBody"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "title": "OneOnOneBody",
+  "type": "object"
+}

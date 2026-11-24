@@ -1,0 +1,278 @@
+{
+  "schema_version": "scenario-card/v1",
+  "scenario_id": "my_scenario",
+  "version": "draft-1",
+  "title": "[[이야기 제목, 40자 이내]]",
+  "logline": "[[시나리오 선택 화면과 AI가 보는 한두 문장. 결말이나 숨은 사실은 쓰지 않는다]]",
+  "lead": {
+    "character_id": "seoyun_clockmaker",
+    "role_in_story": "[[이 이야기에서 주연이 맡은 일과 {player}와의 관계. 숨은 사실이나 결말의 단서는 쓰지 않는다]]",
+    "outfits": [
+      {
+        "outfit_id": "everyday",
+        "label": "[[기본 의상]]"
+      },
+      {
+        "outfit_id": "outing",
+        "label": "[[다른 의상]]"
+      }
+    ],
+    "expressions": [
+      "기본",
+      "웃음",
+      "진지",
+      "놀람",
+      "걱정"
+    ]
+  },
+  "npcs": [
+    {
+      "npc_id": "helper",
+      "name": "조연",
+      "role": "[[누구이고 주연과 어떤 사이인지]]",
+      "voice": "[[말투 한 줄]]",
+      "secret": "[[이 조연이 나오는 이벤트(cast) 동안에만 AI가 보는 사실. 없으면 이 줄을 지운다]]",
+      "expressions": [
+        "기본",
+        "웃음"
+      ],
+      "appears_from": "turning_point"
+    }
+  ],
+  "world": "[[무대: 어디서, 언제, 어떤 분위기에서 며칠 동안 벌어지는 이야기인지]]",
+  "player": {
+    "role": "[[사용자가 이 이야기에서 맡은 사람]]",
+    "knows": "[[사용자 인물이 처음부터 아는 것. 이야기에서 알아낼 것은 쓰지 않는다]]",
+    "default_name": "기본 이름"
+  },
+  "style": {
+    "pov": "first_person_player",
+    "reply_min_chars": 1000,
+    "reply_max_chars": 1600
+  },
+  "start": {
+    "at": "2026-11-03T18:00:00",
+    "place_id": "start_place",
+    "weather": "[[날씨]]",
+    "prologue": "[[이야기 시작 전에 화면에만 보이는 글. 모델에 가지 않는다]]",
+    "situation": "[[AI가 아는 시작 상황. 두 사람이 서로 무엇을 알고 무엇을 모르는지, 오늘 처음 만나는지까지 분명히 쓴다]]",
+    "first_message": "[[첫 장면 서술]]\n\n[서윤:기본] \"[[주연의 첫 대사]]\"",
+    "active_events": [
+      "opening"
+    ]
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch1",
+      "title": "[[1장 제목]]",
+      "min_turns": 3,
+      "ends_with": [
+        "opening"
+      ]
+    },
+    {
+      "chapter_id": "ch2",
+      "title": "[[2장 제목]]",
+      "min_turns": 3,
+      "ends_with": [
+        "turning_point"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "opening",
+      "chapter_id": "ch1",
+      "title": "[[첫 이벤트 제목]]",
+      "kind": "main",
+      "teaser": "[[상태창에 보이는 예고. 내용을 드러내지 않는다]]",
+      "trigger": "director",
+      "setup": "[[이벤트 동안 AI가 계속 보는 상황. 흔들리면 안 되는 사실(이름, 문구)은 여기에 정확히 쓴다]]",
+      "milestones": [
+        {
+          "milestone_id": "step_one",
+          "happens": "[[AI가 원문으로 확인할 수 있는 눈에 보이는 일]]",
+          "guide": "[[이 단계에서 AI가 갈 방향]]"
+        },
+        {
+          "milestone_id": "step_two",
+          "happens": "[[다음 단계에 일어나는 일]]",
+          "guide": "[[AI가 갈 방향]]",
+          "choices": [
+            {
+              "choice_id": "path_a",
+              "text": "\"[[분기 A: 사용자가 그대로 보낼 수 있는 말]]\"",
+              "sets_flags": [
+                "took_path_a"
+              ]
+            },
+            {
+              "choice_id": "path_b",
+              "text": "\"[[분기 B: 사용자가 그대로 보낼 수 있는 말]]\"",
+              "sets_flags": [
+                "took_path_b"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event_id": "small_moment",
+      "chapter_id": "ch1",
+      "title": "[[곁 이벤트 제목]]",
+      "kind": "side",
+      "teaser": "[[곁 이벤트 예고]]",
+      "trigger": "director",
+      "setup": "[[분위기를 더하는 작은 일]]",
+      "milestones": [
+        {
+          "milestone_id": "happens",
+          "happens": "[[눈에 보이는 일]]",
+          "guide": "[[AI가 갈 방향]]"
+        }
+      ]
+    },
+    {
+      "event_id": "turning_point",
+      "chapter_id": "ch2",
+      "title": "[[2장 본 이벤트 제목]]",
+      "kind": "main",
+      "teaser": "[[예고]]",
+      "requires": {
+        "events_done": [
+          "opening"
+        ]
+      },
+      "trigger": "director",
+      "cast": [
+        "helper"
+      ],
+      "setup": "[[앱이 연출로 불러올 일. AI가 다음 답장에서 연다]]",
+      "milestones": [
+        {
+          "milestone_id": "arrives",
+          "happens": "[[조연이 등장한다]]",
+          "guide": "[[AI가 갈 방향]]",
+          "cg": "cg_turning_point"
+        },
+        {
+          "milestone_id": "resolves",
+          "happens": "[[이벤트가 마무리되는 일]]",
+          "guide": "[[AI가 갈 방향]]"
+        }
+      ],
+      "sets_flags": []
+    }
+  ],
+  "flags": [
+    {
+      "key": "took_path_a",
+      "meaning": "[[분기 A를 골랐다]]"
+    },
+    {
+      "key": "took_path_b",
+      "meaning": "[[분기 B를 골랐다]]"
+    }
+  ],
+  "places": [
+    {
+      "place_id": "start_place",
+      "name": "[[시작 장소]]",
+      "image": "bg_start_place"
+    },
+    {
+      "place_id": "second_place",
+      "name": "[[다른 장소]]"
+    }
+  ],
+  "images": [
+    {
+      "image_id": "lead_everyday_0",
+      "kind": "portrait",
+      "label": "주연 · 기본",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "everyday",
+      "expression": "기본"
+    },
+    {
+      "image_id": "lead_everyday_1",
+      "kind": "portrait",
+      "label": "주연 · 웃음",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "everyday",
+      "expression": "웃음"
+    },
+    {
+      "image_id": "lead_everyday_2",
+      "kind": "portrait",
+      "label": "주연 · 진지",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "everyday",
+      "expression": "진지"
+    },
+    {
+      "image_id": "lead_everyday_3",
+      "kind": "portrait",
+      "label": "주연 · 놀람",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "everyday",
+      "expression": "놀람"
+    },
+    {
+      "image_id": "lead_everyday_4",
+      "kind": "portrait",
+      "label": "주연 · 걱정",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "everyday",
+      "expression": "걱정"
+    },
+    {
+      "image_id": "lead_outing_0",
+      "kind": "portrait",
+      "label": "주연 · 다른 의상 · 기본",
+      "speaker": "seoyun_clockmaker",
+      "outfit": "outing",
+      "expression": "기본"
+    },
+    {
+      "image_id": "helper_0",
+      "kind": "portrait",
+      "label": "조연 · 기본",
+      "speaker": "helper",
+      "expression": "기본"
+    },
+    {
+      "image_id": "bg_start_place",
+      "kind": "background",
+      "label": "시작 장소"
+    },
+    {
+      "image_id": "cg_turning_point",
+      "kind": "cg",
+      "label": "2장의 장면 그림"
+    }
+  ],
+  "relationship": {
+    "stages": [
+      {
+        "stage": "[[처음 단계]]",
+        "behavior": "[[이 단계에서 주연이 하는 행동]]"
+      },
+      {
+        "stage": "[[다음 단계]]",
+        "behavior": "[[행동]]",
+        "entry": "[[이 단계로 가려면 대화에서 실제로 일어나야 할 일]]"
+      },
+      {
+        "stage": "[[마지막 단계, 연인이면 mutual true]]",
+        "behavior": "[[행동]]",
+        "entry": "[[두 사람이 각자 말로 확인해야 할 일]]",
+        "mutual": true
+      }
+    ],
+    "start_stage": "[[처음 단계]]",
+    "min_turns_in_stage": 4
+  },
+  "inner_thought": "peek"
+}

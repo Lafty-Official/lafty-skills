@@ -1,0 +1,1126 @@
+{
+  "title": 40,
+  "logline": 80,
+  "description": 2000,
+  "genres": [
+    1,
+    3
+  ],
+  "known_genres": [
+    "로맨스",
+    "로판",
+    "판타지",
+    "무협",
+    "SF",
+    "미스터리",
+    "일상",
+    "캠퍼스",
+    "BL",
+    "GL"
+  ],
+  "canon_tags": 10,
+  "tags": 10,
+  "tag_chars": 12,
+  "tag_book": {
+    "words": {
+      "현대": [
+        "modern"
+      ],
+      "근현대": [
+        "recent-past"
+      ],
+      "조선": [
+        "joseon"
+      ],
+      "사극": [
+        "joseon"
+      ],
+      "조선풍": [
+        "joseon"
+      ],
+      "동양풍고대": [
+        "east-ancient"
+      ],
+      "무림": [
+        "east-ancient"
+      ],
+      "중원": [
+        "east-ancient"
+      ],
+      "서양중세": [
+        "west-medieval"
+      ],
+      "서양근대": [
+        "west-modern"
+      ],
+      "빅토리아": [
+        "west-modern"
+      ],
+      "근미래": [
+        "near-future"
+      ],
+      "먼미래": [
+        "far-future"
+      ],
+      "현실": [
+        "real-world"
+      ],
+      "현대판타지": [
+        "urban-fantasy"
+      ],
+      "현판": [
+        "urban-fantasy"
+      ],
+      "이세계": [
+        "isekai"
+      ],
+      "게임세계": [
+        "game-world"
+      ],
+      "상태창": [
+        "status-window"
+      ],
+      "시스템": [
+        "status-window"
+      ],
+      "소설속세계": [
+        "in-a-novel"
+      ],
+      "책속": [
+        "in-a-novel"
+      ],
+      "아포칼립스": [
+        "apocalypse"
+      ],
+      "좀비": [
+        "apocalypse"
+      ],
+      "멸망": [
+        "apocalypse"
+      ],
+      "디스토피아": [
+        "dystopia"
+      ],
+      "사이버펑크": [
+        "cyberpunk"
+      ],
+      "스팀펑크": [
+        "steampunk"
+      ],
+      "우주": [
+        "space"
+      ],
+      "학원": [
+        "academy"
+      ],
+      "학교물": [
+        "academy"
+      ],
+      "학원물": [
+        "academy"
+      ],
+      "캠퍼스": [
+        "campus"
+      ],
+      "대학": [
+        "campus"
+      ],
+      "대학교": [
+        "campus"
+      ],
+      "직장": [
+        "office"
+      ],
+      "오피스": [
+        "office"
+      ],
+      "회사": [
+        "office"
+      ],
+      "사내": [
+        "office"
+      ],
+      "연예계": [
+        "showbiz"
+      ],
+      "연예인": [
+        "showbiz"
+      ],
+      "스포츠": [
+        "sports"
+      ],
+      "병원": [
+        "hospital"
+      ],
+      "군대": [
+        "military"
+      ],
+      "경찰수사": [
+        "police"
+      ],
+      "경찰": [
+        "police"
+      ],
+      "수사": [
+        "police"
+      ],
+      "궁중": [
+        "royal-court"
+      ],
+      "귀족사회": [
+        "nobility"
+      ],
+      "마법학교": [
+        "magic-school"
+      ],
+      "길드": [
+        "guild"
+      ],
+      "던전": [
+        "dungeon"
+      ],
+      "게이트": [
+        "dungeon"
+      ],
+      "저택": [
+        "mansion"
+      ],
+      "시골": [
+        "countryside"
+      ],
+      "카페가게": [
+        "shop"
+      ],
+      "카페": [
+        "shop"
+      ],
+      "가게": [
+        "shop"
+      ],
+      "재벌가": [
+        "chaebol-family"
+      ],
+      "뒷골목": [
+        "back-alley"
+      ],
+      "해외": [
+        "abroad"
+      ],
+      "여행": [
+        "travel"
+      ],
+      "첫만남": [
+        "first-meeting"
+      ],
+      "재회": [
+        "reunion"
+      ],
+      "첫사랑": [
+        "first-love"
+      ],
+      "동창": [
+        "classmates"
+      ],
+      "동기": [
+        "classmates"
+      ],
+      "소꿉친구": [
+        "childhood-friends"
+      ],
+      "소꿉": [
+        "childhood-friends"
+      ],
+      "소꿉친": [
+        "childhood-friends"
+      ],
+      "이웃": [
+        "neighbors"
+      ],
+      "동거": [
+        "living-together"
+      ],
+      "맞선": [
+        "matchmaking"
+      ],
+      "정략결혼": [
+        "arranged-marriage"
+      ],
+      "계약관계": [
+        "contract"
+      ],
+      "계약연애": [
+        "contract"
+      ],
+      "계약결혼": [
+        "contract"
+      ],
+      "계약물": [
+        "contract"
+      ],
+      "비밀연애": [
+        "secret-romance"
+      ],
+      "신분위장": [
+        "disguise"
+      ],
+      "짝사랑": [
+        "unrequited"
+      ],
+      "외사랑": [
+        "unrequited"
+      ],
+      "삼각관계": [
+        "love-triangle"
+      ],
+      "혐관": [
+        "hate-to-love"
+      ],
+      "혐오관계": [
+        "hate-to-love"
+      ],
+      "혐관물": [
+        "hate-to-love"
+      ],
+      "앙숙": [
+        "archenemies"
+      ],
+      "라이벌": [
+        "rivals"
+      ],
+      "주종": [
+        "master-servant"
+      ],
+      "선후배": [
+        "seniors-juniors"
+      ],
+      "상사와부하": [
+        "boss-subordinate"
+      ],
+      "스승과제자": [
+        "teacher-student"
+      ],
+      "사제": [
+        "teacher-student"
+      ],
+      "신분차이": [
+        "status-gap"
+      ],
+      "나이차이": [
+        "age-gap"
+      ],
+      "연상": [
+        "older"
+      ],
+      "연하": [
+        "younger"
+      ],
+      "동갑": [
+        "same-age"
+      ],
+      "회귀": [
+        "regression"
+      ],
+      "빙의": [
+        "possession"
+      ],
+      "환생": [
+        "reincarnation"
+      ],
+      "타임루프": [
+        "time-loop"
+      ],
+      "복수": [
+        "revenge"
+      ],
+      "구원": [
+        "redemption"
+      ],
+      "구원서사": [
+        "redemption"
+      ],
+      "후회": [
+        "regret"
+      ],
+      "후회물": [
+        "regret"
+      ],
+      "오해": [
+        "misunderstanding"
+      ],
+      "기억상실": [
+        "amnesia"
+      ],
+      "시한부": [
+        "terminal"
+      ],
+      "성장": [
+        "growth"
+      ],
+      "생존": [
+        "survival"
+      ],
+      "탈출": [
+        "escape"
+      ],
+      "육성": [
+        "raising"
+      ],
+      "경영": [
+        "management"
+      ],
+      "모험": [
+        "adventure"
+      ],
+      "전쟁": [
+        "war"
+      ],
+      "정치": [
+        "politics"
+      ],
+      "추리": [
+        "mystery-solving"
+      ],
+      "잠입": [
+        "infiltration"
+      ],
+      "불륜": [
+        "affair"
+      ],
+      "바람": [
+        "affair"
+      ],
+      "일상공유": [
+        "daily-sharing"
+      ],
+      "위로상담": [
+        "comfort"
+      ],
+      "힐링톡": [
+        "comfort"
+      ],
+      "위로": [
+        "comfort"
+      ],
+      "상담": [
+        "comfort"
+      ],
+      "밀당": [
+        "push-pull"
+      ],
+      "밀고당기기": [
+        "push-pull"
+      ],
+      "고백": [
+        "confession"
+      ],
+      "연애상담": [
+        "love-advice"
+      ],
+      "농담": [
+        "banter"
+      ],
+      "남캐": [
+        "male-lead"
+      ],
+      "남자캐릭터": [
+        "male-lead"
+      ],
+      "여캐": [
+        "female-lead"
+      ],
+      "여자캐릭터": [
+        "female-lead"
+      ],
+      "인외": [
+        "inhuman"
+      ],
+      "뱀파이어": [
+        "vampire"
+      ],
+      "수인": [
+        "beastfolk"
+      ],
+      "늑대인간": [
+        "beastfolk"
+      ],
+      "용": [
+        "dragon"
+      ],
+      "악마": [
+        "demon"
+      ],
+      "천사": [
+        "angel"
+      ],
+      "신": [
+        "deity"
+      ],
+      "요괴": [
+        "yokai"
+      ],
+      "구미호": [
+        "yokai"
+      ],
+      "유령": [
+        "ghost"
+      ],
+      "안드로이드": [
+        "android"
+      ],
+      "로봇": [
+        "android"
+      ],
+      "ai": [
+        "android"
+      ],
+      "엘프": [
+        "elf"
+      ],
+      "마물": [
+        "monster"
+      ],
+      "다정": [
+        "gentle"
+      ],
+      "무심": [
+        "aloof"
+      ],
+      "무뚝뚝": [
+        "aloof"
+      ],
+      "츤데레": [
+        "tsundere"
+      ],
+      "얀데레": [
+        "yandere"
+      ],
+      "집착": [
+        "obsessive"
+      ],
+      "계략": [
+        "scheming"
+      ],
+      "능글": [
+        "sly"
+      ],
+      "까칠": [
+        "prickly"
+      ],
+      "순정": [
+        "devoted"
+      ],
+      "순진": [
+        "innocent"
+      ],
+      "철벽": [
+        "guarded"
+      ],
+      "다혈질": [
+        "hot-tempered"
+      ],
+      "냉정": [
+        "cold"
+      ],
+      "장난꾸러기": [
+        "prankster"
+      ],
+      "허당": [
+        "clumsy"
+      ],
+      "쾌활": [
+        "cheerful"
+      ],
+      "소심": [
+        "timid"
+      ],
+      "엉뚱": [
+        "quirky"
+      ],
+      "오만": [
+        "arrogant"
+      ],
+      "상냥": [
+        "kind"
+      ],
+      "독설": [
+        "sharp-tongued"
+      ],
+      "갭모에": [
+        "gap-moe"
+      ],
+      "수줍음": [
+        "shy"
+      ],
+      "충직": [
+        "loyal"
+      ],
+      "광기": [
+        "madness"
+      ],
+      "카리스마": [
+        "charisma"
+      ],
+      "존댓말": [
+        "polite"
+      ],
+      "경어": [
+        "polite"
+      ],
+      "반말": [
+        "casual"
+      ],
+      "사투리": [
+        "dialect"
+      ],
+      "사극말투": [
+        "archaic"
+      ],
+      "왕족": [
+        "royalty"
+      ],
+      "황제": [
+        "royalty"
+      ],
+      "황태자": [
+        "royalty"
+      ],
+      "공주": [
+        "royalty"
+      ],
+      "귀족": [
+        "noble"
+      ],
+      "기사": [
+        "knight"
+      ],
+      "호위기사": [
+        "knight"
+      ],
+      "마법사": [
+        "mage"
+      ],
+      "용사": [
+        "hero"
+      ],
+      "마왕": [
+        "demon-lord"
+      ],
+      "성직자": [
+        "clergy"
+      ],
+      "재벌": [
+        "chaebol"
+      ],
+      "아이돌": [
+        "idol"
+      ],
+      "배우": [
+        "actor"
+      ],
+      "의사": [
+        "doctor"
+      ],
+      "형사": [
+        "police-detective"
+      ],
+      "교사": [
+        "teacher"
+      ],
+      "선생님": [
+        "teacher"
+      ],
+      "학생": [
+        "student"
+      ],
+      "초등학생": [
+        "student"
+      ],
+      "중학생": [
+        "student"
+      ],
+      "고등학생": [
+        "student"
+      ],
+      "여고생": [
+        "student"
+      ],
+      "남고생": [
+        "student"
+      ],
+      "여중생": [
+        "student"
+      ],
+      "남중생": [
+        "student"
+      ],
+      "초딩": [
+        "student"
+      ],
+      "중딩": [
+        "student"
+      ],
+      "고딩": [
+        "student"
+      ],
+      "대학생": [
+        "college-student"
+      ],
+      "직장인": [
+        "office-worker"
+      ],
+      "시종": [
+        "servant"
+      ],
+      "조직보스": [
+        "crime-boss"
+      ],
+      "암살자": [
+        "assassin"
+      ],
+      "용병": [
+        "mercenary"
+      ],
+      "헌터": [
+        "hunter"
+      ],
+      "군인": [
+        "soldier"
+      ],
+      "달달": [
+        "sweet"
+      ],
+      "달달물": [
+        "sweet"
+      ],
+      "설렘": [
+        "flutter"
+      ],
+      "힐링": [
+        "healing"
+      ],
+      "잔잔": [
+        "calm"
+      ],
+      "잔잔함": [
+        "calm"
+      ],
+      "코믹": [
+        "comic"
+      ],
+      "개그": [
+        "comic"
+      ],
+      "병맛": [
+        "absurd"
+      ],
+      "유쾌": [
+        "jolly"
+      ],
+      "진지": [
+        "serious"
+      ],
+      "감성": [
+        "sentimental"
+      ],
+      "순애": [
+        "pure-love"
+      ],
+      "애절": [
+        "poignant"
+      ],
+      "긴장감": [
+        "tension"
+      ],
+      "미스터리": [
+        "mystery"
+      ],
+      "어두움": [
+        "dark"
+      ],
+      "다크": [
+        "dark"
+      ],
+      "서정": [
+        "lyrical"
+      ],
+      "사이다": [
+        "satisfying"
+      ],
+      "고구마": [
+        "frustrating"
+      ],
+      "막장": [
+        "makjang"
+      ],
+      "반전": [
+        "twist"
+      ],
+      "느린전개": [
+        "slow-burn"
+      ],
+      "슬로우번": [
+        "slow-burn"
+      ],
+      "빠른전개": [
+        "fast-paced"
+      ],
+      "해피엔딩": [
+        "happy-ending"
+      ],
+      "해피": [
+        "happy-ending"
+      ],
+      "he": [
+        "happy-ending"
+      ],
+      "새드엔딩": [
+        "sad-ending"
+      ],
+      "새엔": [
+        "sad-ending"
+      ],
+      "se": [
+        "sad-ending"
+      ],
+      "열린결말": [
+        "open-ending"
+      ],
+      "멀티엔딩": [
+        "multi-ending"
+      ],
+      "배드엔딩": [
+        "bad-ending"
+      ],
+      "be": [
+        "bad-ending"
+      ],
+      "피폐": [
+        "bleak"
+      ],
+      "피폐물": [
+        "bleak"
+      ],
+      "유혈": [
+        "bloodshed"
+      ],
+      "폭력": [
+        "violence"
+      ],
+      "공포": [
+        "horror"
+      ],
+      "호러": [
+        "horror"
+      ],
+      "죽음": [
+        "death"
+      ],
+      "학대": [
+        "abuse"
+      ],
+      "자해": [
+        "self-harm"
+      ],
+      "감금": [
+        "confinement"
+      ],
+      "성인로맨스": [
+        "adult-romance"
+      ],
+      "19로맨스": [
+        "adult-romance"
+      ],
+      "성인연애": [
+        "adult-romance"
+      ],
+      "수위높음": [
+        "explicit"
+      ],
+      "고수위": [
+        "explicit"
+      ],
+      "씬": [
+        "explicit"
+      ],
+      "유혹": [
+        "seduction"
+      ],
+      "유혹물": [
+        "seduction"
+      ],
+      "원나잇": [
+        "one-night"
+      ],
+      "하룻밤": [
+        "one-night"
+      ],
+      "몸정": [
+        "body-first"
+      ],
+      "몸정맘정": [
+        "body-first"
+      ],
+      "파트너관계": [
+        "partners"
+      ],
+      "섹파": [
+        "partners"
+      ],
+      "노출": [
+        "exposure"
+      ],
+      "네토라레": [
+        "ntr"
+      ],
+      "ntr": [
+        "ntr"
+      ],
+      "집착남": [
+        "obsessive",
+        "male-lead"
+      ],
+      "계략녀": [
+        "scheming",
+        "female-lead"
+      ],
+      "냉미남": [
+        "cold",
+        "male-lead"
+      ],
+      "연상남": [
+        "older",
+        "male-lead"
+      ],
+      "영애": [
+        "noble",
+        "female-lead"
+      ],
+      "성녀": [
+        "clergy",
+        "female-lead"
+      ],
+      "집사": [
+        "servant",
+        "male-lead"
+      ],
+      "메이드": [
+        "servant",
+        "female-lead"
+      ],
+      "회빙환": [
+        "regression",
+        "possession",
+        "reincarnation"
+      ],
+      "책빙의": [
+        "possession",
+        "in-a-novel"
+      ],
+      "사내연애": [
+        "secret-romance",
+        "office"
+      ],
+      "로코": [
+        "comic",
+        "flutter"
+      ]
+    },
+    "adult": [
+      "adult-romance",
+      "body-first",
+      "explicit",
+      "exposure",
+      "ntr",
+      "one-night",
+      "partners",
+      "seduction"
+    ],
+    "implies": {
+      "vampire": [
+        "inhuman"
+      ],
+      "beastfolk": [
+        "inhuman"
+      ],
+      "dragon": [
+        "inhuman"
+      ],
+      "demon": [
+        "inhuman"
+      ],
+      "angel": [
+        "inhuman"
+      ],
+      "deity": [
+        "inhuman"
+      ],
+      "yokai": [
+        "inhuman"
+      ],
+      "ghost": [
+        "inhuman"
+      ],
+      "android": [
+        "inhuman"
+      ],
+      "elf": [
+        "inhuman"
+      ],
+      "monster": [
+        "inhuman"
+      ]
+    }
+  },
+  "tag_rules": {
+    "banned": [
+      {
+        "label": "미성년 성적 묘사",
+        "words": [
+          "로리",
+          "쇼타",
+          "아동",
+          "미성년",
+          "ㄹㄹ"
+        ]
+      },
+      {
+        "label": "실존 인물",
+        "words": [
+          "실존",
+          "실제 인물"
+        ]
+      },
+      {
+        "label": "성폭력·비동의",
+        "words": [
+          "강간",
+          "강압",
+          "비동의",
+          "수면간",
+          "최면 조종"
+        ]
+      },
+      {
+        "label": "근친",
+        "words": [
+          "근친",
+          "근친상간"
+        ]
+      },
+      {
+        "label": "수간",
+        "words": [
+          "수간"
+        ]
+      },
+      {
+        "label": "시체 성애",
+        "words": [
+          "네크로"
+        ]
+      },
+      {
+        "label": "잔혹 묘사",
+        "words": [
+          "고어",
+          "스너프",
+          "고문 묘사"
+        ]
+      },
+      {
+        "label": "SM·다인·촉수",
+        "words": [
+          "BDSM",
+          "스와핑",
+          "촉수물"
+        ]
+      }
+    ],
+    "adult": [
+      "성인 로맨스",
+      "19 로맨스",
+      "성인 연애",
+      "수위 높음",
+      "고수위",
+      "씬",
+      "유혹",
+      "유혹물",
+      "원나잇",
+      "하룻밤",
+      "몸정",
+      "몸정맘정",
+      "파트너 관계",
+      "섹파",
+      "노출",
+      "네토라레",
+      "NTR"
+    ],
+    "school": {
+      "학생": [
+        "학생",
+        "초등학생",
+        "중학생",
+        "고등학생",
+        "여고생",
+        "남고생",
+        "여중생",
+        "남중생",
+        "초딩",
+        "중딩",
+        "고딩"
+      ],
+      "학원": [
+        "학원",
+        "학교물",
+        "학원물"
+      ]
+    },
+    "student": "학생",
+    "romance_genres": [
+      "BL",
+      "GL",
+      "로맨스",
+      "로판"
+    ]
+  },
+  "source": 60,
+  "adult_age": 19,
+  "adult_main_age": 20,
+  "card": {
+    "chars": 8000,
+    "suggested": [
+      1200,
+      6500
+    ]
+  },
+  "world_suggested": 2000,
+  "pictures": {
+    "set_name": 30,
+    "set_tags": 80,
+    "tag_chars": 80,
+    "quality_tags": [
+      "absurdres",
+      "amazing quality",
+      "best quality",
+      "masterpiece"
+    ],
+    "young_tags": [
+      "loli",
+      "shota",
+      "child",
+      "kid",
+      "toddler",
+      "aged down",
+      "petite"
+    ],
+    "known_faces": [
+      "기본",
+      "웃음",
+      "당황",
+      "진지",
+      "울먹임",
+      "짜증",
+      "삐짐"
+    ]
+  }
+}

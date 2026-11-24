@@ -1,0 +1,1274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario-card-v1.schema.json",
+  "$defs": {
+    "Chapter": {
+      "additionalProperties": false,
+      "properties": {
+        "chapter_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Chapter Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "min_turns": {
+          "default": 3,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Min Turns",
+          "type": "integer"
+        },
+        "ends_with": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Ends With",
+          "type": "array"
+        },
+        "stage_floor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stage Floor"
+        },
+        "outfit": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outfit"
+        }
+      },
+      "required": [
+        "chapter_id",
+        "title",
+        "ends_with"
+      ],
+      "title": "Chapter",
+      "type": "object"
+    },
+    "EndingSpec": {
+      "additionalProperties": false,
+      "description": "What an ending event adds once it closes the story; only on the last chapter's ends.",
+      "properties": {
+        "title": {
+          "anyOf": [
+            {
+              "maxLength": 30,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "epilogue": {
+          "anyOf": [
+            {
+              "maxLength": 400,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Epilogue"
+        },
+        "cg": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cg"
+        }
+      },
+      "title": "EndingSpec",
+      "type": "object"
+    },
+    "EventKind": {
+      "enum": [
+        "main",
+        "side"
+      ],
+      "title": "EventKind",
+      "type": "string"
+    },
+    "FlagSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "pattern": "^[a-z0-9_.-]{1,60}$",
+          "title": "Key",
+          "type": "string"
+        },
+        "meaning": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Meaning",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "meaning"
+      ],
+      "title": "FlagSpec",
+      "type": "object"
+    },
+    "Follows": {
+      "additionalProperties": false,
+      "description": "A sequel names the story it continues and the endings it assumes happened.",
+      "properties": {
+        "scenario_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "endings": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Endings",
+          "type": "array"
+        },
+        "carry": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Carry",
+          "type": "array"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "endings"
+      ],
+      "title": "Follows",
+      "type": "object"
+    },
+    "ImageKind": {
+      "enum": [
+        "portrait",
+        "background",
+        "cg"
+      ],
+      "title": "ImageKind",
+      "type": "string"
+    },
+    "InnerThought": {
+      "enum": [
+        "peek",
+        "shown",
+        "off"
+      ],
+      "title": "InnerThought",
+      "type": "string"
+    },
+    "LeadRole": {
+      "additionalProperties": false,
+      "description": "The card character in this story; the first outfit and expression are the defaults.",
+      "properties": {
+        "character_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Character Id",
+          "type": "string"
+        },
+        "role_in_story": {
+          "maxLength": 1500,
+          "minLength": 1,
+          "title": "Role In Story",
+          "type": "string"
+        },
+        "outfits": {
+          "items": {
+            "$ref": "#/$defs/Outfit"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Outfits",
+          "type": "array"
+        },
+        "expressions": {
+          "items": {
+            "maxLength": 10,
+            "minLength": 1,
+            "pattern": "^[^\\[\\]:\\n]+$",
+            "type": "string"
+          },
+          "maxItems": 40,
+          "minItems": 1,
+          "title": "Expressions",
+          "type": "array"
+        },
+        "expression_notes": {
+          "additionalProperties": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxProperties": 40,
+          "title": "Expression Notes",
+          "type": "object"
+        }
+      },
+      "required": [
+        "character_id",
+        "role_in_story",
+        "outfits",
+        "expressions"
+      ],
+      "title": "LeadRole",
+      "type": "object"
+    },
+    "Milestone": {
+      "additionalProperties": false,
+      "description": "One step of an event: `happens` is what the observer checks, `guide` steers the actor.",
+      "properties": {
+        "milestone_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Milestone Id",
+          "type": "string"
+        },
+        "happens": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Happens",
+          "type": "string"
+        },
+        "guide": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Guide",
+          "type": "string"
+        },
+        "cg": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cg"
+        },
+        "choices": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/StoryChoice"
+          },
+          "maxItems": 3,
+          "title": "Choices",
+          "type": "array"
+        }
+      },
+      "required": [
+        "milestone_id",
+        "happens",
+        "guide"
+      ],
+      "title": "Milestone",
+      "type": "object"
+    },
+    "Npc": {
+      "additionalProperties": false,
+      "description": "A supporting character written in a few lines instead of a full card.",
+      "properties": {
+        "npc_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Npc Id",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^[^\\[\\]:\\n]{1,12}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "voice": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Voice",
+          "type": "string"
+        },
+        "appearance": {
+          "anyOf": [
+            {
+              "maxLength": 400,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Appearance"
+        },
+        "secret": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secret"
+        },
+        "secret_from": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Secret From",
+          "type": "array"
+        },
+        "expressions": {
+          "default": [
+            "기본"
+          ],
+          "items": {
+            "maxLength": 10,
+            "minLength": 1,
+            "pattern": "^[^\\[\\]:\\n]+$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Expressions",
+          "type": "array"
+        },
+        "expression_notes": {
+          "additionalProperties": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxProperties": 16,
+          "title": "Expression Notes",
+          "type": "object"
+        },
+        "appears_from": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Appears From"
+        }
+      },
+      "required": [
+        "npc_id",
+        "name",
+        "role",
+        "voice"
+      ],
+      "title": "Npc",
+      "type": "object"
+    },
+    "Outfit": {
+      "additionalProperties": false,
+      "properties": {
+        "outfit_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Outfit Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 20,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detail"
+        }
+      },
+      "required": [
+        "outfit_id",
+        "label"
+      ],
+      "title": "Outfit",
+      "type": "object"
+    },
+    "Place": {
+      "additionalProperties": false,
+      "properties": {
+        "place_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Place Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image"
+        }
+      },
+      "required": [
+        "place_id",
+        "name"
+      ],
+      "title": "Place",
+      "type": "object"
+    },
+    "Player": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "knows": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Knows",
+          "type": "string"
+        },
+        "default_name": {
+          "pattern": "^[^\\[\\]:\\n]{1,12}$",
+          "title": "Default Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "knows",
+        "default_name"
+      ],
+      "title": "Player",
+      "type": "object"
+    },
+    "RelationshipStage": {
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "behavior": {
+          "title": "Behavior",
+          "type": "string"
+        },
+        "entry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entry"
+        },
+        "mutual": {
+          "default": false,
+          "title": "Mutual",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stage",
+        "behavior"
+      ],
+      "title": "RelationshipStage",
+      "type": "object"
+    },
+    "Requires": {
+      "additionalProperties": false,
+      "properties": {
+        "events_done": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Events Done",
+          "type": "array"
+        },
+        "flags_all": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags All",
+          "type": "array"
+        },
+        "flags_none": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags None",
+          "type": "array"
+        },
+        "stage_at_least": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stage At Least"
+        }
+      },
+      "title": "Requires",
+      "type": "object"
+    },
+    "ScenarioImage": {
+      "additionalProperties": false,
+      "description": "A picture the story may show. Without a file the app draws a labeled placeholder.",
+      "properties": {
+        "image_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Image Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ImageKind"
+        },
+        "label": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "file": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9_.-]{1,100}\\.(png|jpg|jpeg|webp|svg)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker"
+        },
+        "outfit": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outfit"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expression"
+        }
+      },
+      "required": [
+        "image_id",
+        "kind",
+        "label"
+      ],
+      "title": "ScenarioImage",
+      "type": "object"
+    },
+    "Start": {
+      "additionalProperties": false,
+      "description": "`at` is the story's own clock, not real time. `prologue` is shown, never sent.",
+      "properties": {
+        "at": {
+          "format": "date-time",
+          "title": "At",
+          "type": "string"
+        },
+        "place_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Place Id",
+          "type": "string"
+        },
+        "weather": {
+          "maxLength": 20,
+          "minLength": 1,
+          "title": "Weather",
+          "type": "string"
+        },
+        "prologue": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prologue"
+        },
+        "situation": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Situation",
+          "type": "string"
+        },
+        "first_message": {
+          "maxLength": 3000,
+          "minLength": 1,
+          "title": "First Message",
+          "type": "string"
+        },
+        "active_events": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Active Events",
+          "type": "array"
+        },
+        "outfit": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outfit"
+        }
+      },
+      "required": [
+        "at",
+        "place_id",
+        "weather",
+        "situation",
+        "first_message"
+      ],
+      "title": "Start",
+      "type": "object"
+    },
+    "StoryChoice": {
+      "additionalProperties": false,
+      "properties": {
+        "choice_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Choice Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "sets_flags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Sets Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "choice_id",
+        "text"
+      ],
+      "title": "StoryChoice",
+      "type": "object"
+    },
+    "StoryEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "chapter_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Chapter Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EventKind"
+        },
+        "teaser": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Teaser",
+          "type": "string"
+        },
+        "requires": {
+          "$ref": "#/$defs/Requires",
+          "default": {
+            "events_done": [],
+            "flags_all": [],
+            "flags_none": [],
+            "stage_at_least": null
+          }
+        },
+        "trigger": {
+          "$ref": "#/$defs/Trigger"
+        },
+        "setup": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Setup",
+          "type": "string"
+        },
+        "milestones": {
+          "items": {
+            "$ref": "#/$defs/Milestone"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Milestones",
+          "type": "array"
+        },
+        "sets_flags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Sets Flags",
+          "type": "array"
+        },
+        "cast": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Cast",
+          "type": "array"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "At"
+        },
+        "ending": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EndingSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "outfit": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outfit"
+        }
+      },
+      "required": [
+        "event_id",
+        "chapter_id",
+        "title",
+        "kind",
+        "teaser",
+        "trigger",
+        "setup",
+        "milestones"
+      ],
+      "title": "StoryEvent",
+      "type": "object"
+    },
+    "StoryRelationship": {
+      "additionalProperties": false,
+      "description": "Stages for this story; the dwell counts turns because story time runs compressed.",
+      "properties": {
+        "stages": {
+          "items": {
+            "$ref": "#/$defs/RelationshipStage"
+          },
+          "maxItems": 8,
+          "minItems": 2,
+          "title": "Stages",
+          "type": "array"
+        },
+        "start_stage": {
+          "title": "Start Stage",
+          "type": "string"
+        },
+        "min_turns_in_stage": {
+          "default": 5,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Min Turns In Stage",
+          "type": "integer"
+        },
+        "card_stages": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "maxProperties": 8,
+          "title": "Card Stages",
+          "type": "object"
+        }
+      },
+      "required": [
+        "stages",
+        "start_stage"
+      ],
+      "title": "StoryRelationship",
+      "type": "object"
+    },
+    "Style": {
+      "additionalProperties": false,
+      "properties": {
+        "pov": {
+          "default": "first_person_player",
+          "enum": [
+            "first_person_player",
+            "third_person"
+          ],
+          "title": "Pov",
+          "type": "string"
+        },
+        "reply_min_chars": {
+          "default": 1000,
+          "maximum": 3000,
+          "minimum": 100,
+          "title": "Reply Min Chars",
+          "type": "integer"
+        },
+        "reply_max_chars": {
+          "default": 1600,
+          "maximum": 4000,
+          "minimum": 200,
+          "title": "Reply Max Chars",
+          "type": "integer"
+        }
+      },
+      "title": "Style",
+      "type": "object"
+    },
+    "Trigger": {
+      "enum": [
+        "director",
+        "player"
+      ],
+      "title": "Trigger",
+      "type": "string"
+    },
+    "WidgetKind": {
+      "enum": [
+        "text",
+        "meter",
+        "list",
+        "choice"
+      ],
+      "title": "WidgetKind",
+      "type": "string"
+    },
+    "WidgetSpec": {
+      "additionalProperties": false,
+      "description": "One row. `about` is lead, player, scene or a supporting character's id; the scenario\ncheck resolves the id.",
+      "properties": {
+        "widget_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,31}$",
+          "title": "Widget Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 16,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/WidgetKind"
+        },
+        "about": {
+          "default": "lead",
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "About",
+          "type": "string"
+        },
+        "instruction": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Instruction",
+          "type": "string"
+        },
+        "max_chars": {
+          "default": 40,
+          "maximum": 80,
+          "minimum": 10,
+          "title": "Max Chars",
+          "type": "integer"
+        },
+        "min": {
+          "default": 0,
+          "title": "Min",
+          "type": "integer"
+        },
+        "max": {
+          "default": 100,
+          "title": "Max",
+          "type": "integer"
+        },
+        "max_step": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Step"
+        },
+        "unit": {
+          "default": "",
+          "maxLength": 4,
+          "title": "Unit",
+          "type": "string"
+        },
+        "max_items": {
+          "default": 5,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Max Items",
+          "type": "integer"
+        },
+        "item_chars": {
+          "default": 12,
+          "maximum": 20,
+          "minimum": 4,
+          "title": "Item Chars",
+          "type": "integer"
+        },
+        "options": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Options",
+          "type": "array"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "to_actor": {
+          "default": false,
+          "title": "To Actor",
+          "type": "boolean"
+        },
+        "follows_stage": {
+          "default": false,
+          "title": "Follows Stage",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "widget_id",
+        "label",
+        "kind",
+        "instruction"
+      ],
+      "title": "WidgetSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "scenario-card/v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scenario_id": {
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "version": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "logline": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Logline",
+      "type": "string"
+    },
+    "lead": {
+      "$ref": "#/$defs/LeadRole"
+    },
+    "npcs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Npc"
+      },
+      "maxItems": 6,
+      "title": "Npcs",
+      "type": "array"
+    },
+    "world": {
+      "maxLength": 7000,
+      "minLength": 1,
+      "title": "World",
+      "type": "string"
+    },
+    "player": {
+      "$ref": "#/$defs/Player"
+    },
+    "style": {
+      "$ref": "#/$defs/Style",
+      "default": {
+        "pov": "first_person_player",
+        "reply_min_chars": 1000,
+        "reply_max_chars": 1600
+      }
+    },
+    "start": {
+      "$ref": "#/$defs/Start"
+    },
+    "chapters": {
+      "items": {
+        "$ref": "#/$defs/Chapter"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Chapters",
+      "type": "array"
+    },
+    "events": {
+      "items": {
+        "$ref": "#/$defs/StoryEvent"
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Events",
+      "type": "array"
+    },
+    "flags": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/FlagSpec"
+      },
+      "title": "Flags",
+      "type": "array"
+    },
+    "places": {
+      "items": {
+        "$ref": "#/$defs/Place"
+      },
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Places",
+      "type": "array"
+    },
+    "images": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioImage"
+      },
+      "maxItems": 1000,
+      "title": "Images",
+      "type": "array"
+    },
+    "relationship": {
+      "$ref": "#/$defs/StoryRelationship"
+    },
+    "inner_thought": {
+      "$ref": "#/$defs/InnerThought",
+      "default": "peek"
+    },
+    "follows": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Follows"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "widgets": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/WidgetSpec"
+      },
+      "maxItems": 6,
+      "title": "Widgets",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "version",
+    "title",
+    "logline",
+    "lead",
+    "world",
+    "player",
+    "start",
+    "chapters",
+    "events",
+    "places",
+    "relationship"
+  ],
+  "title": "ScenarioCard",
+  "type": "object"
+}

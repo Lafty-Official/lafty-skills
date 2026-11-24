@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "character-card-v2.schema.json",
+  "$defs": {
+    "CanonPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "fixed": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fixed",
+          "type": "array"
+        },
+        "improvisable": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Improvisable",
+          "type": "array"
+        },
+        "evidence_required": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Required",
+          "type": "array"
+        }
+      },
+      "required": [
+        "fixed",
+        "improvisable",
+        "evidence_required"
+      ],
+      "title": "CanonPolicy",
+      "type": "object"
+    },
+    "CardDrives": {
+      "additionalProperties": false,
+      "properties": {
+        "want": {
+          "title": "Want",
+          "type": "string"
+        },
+        "fear": {
+          "title": "Fear",
+          "type": "string"
+        },
+        "current_concern": {
+          "title": "Current Concern",
+          "type": "string"
+        }
+      },
+      "required": [
+        "want",
+        "fear",
+        "current_concern"
+      ],
+      "title": "CardDrives",
+      "type": "object"
+    },
+    "CardIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "age": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Age"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "world": {
+          "title": "World",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "world"
+      ],
+      "title": "CardIdentity",
+      "type": "object"
+    },
+    "CardValue": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "behavior": {
+          "title": "Behavior",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "behavior"
+      ],
+      "title": "CardValue",
+      "type": "object"
+    },
+    "CardVoice": {
+      "additionalProperties": false,
+      "properties": {
+        "speech_level": {
+          "title": "Speech Level",
+          "type": "string"
+        },
+        "rhythm": {
+          "title": "Rhythm",
+          "type": "string"
+        },
+        "habits": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Habits",
+          "type": "array"
+        },
+        "humor": {
+          "title": "Humor",
+          "type": "string"
+        },
+        "avoid": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Avoid",
+          "type": "array"
+        }
+      },
+      "required": [
+        "speech_level",
+        "rhythm",
+        "habits",
+        "humor",
+        "avoid"
+      ],
+      "title": "CardVoice",
+      "type": "object"
+    },
+    "ExampleExchange": {
+      "additionalProperties": false,
+      "properties": {
+        "situation": {
+          "title": "Situation",
+          "type": "string"
+        },
+        "lines": {
+          "items": {
+            "$ref": "#/$defs/ExampleLine"
+          },
+          "minItems": 2,
+          "title": "Lines",
+          "type": "array"
+        }
+      },
+      "required": [
+        "situation",
+        "lines"
+      ],
+      "title": "ExampleExchange",
+      "type": "object"
+    },
+    "ExampleLine": {
+      "additionalProperties": false,
+      "properties": {
+        "speaker": {
+          "enum": [
+            "user",
+            "character"
+          ],
+          "title": "Speaker",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "speaker",
+        "text"
+      ],
+      "title": "ExampleLine",
+      "type": "object"
+    },
+    "LoreEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        }
+      },
+      "required": [
+        "topic",
+        "content"
+      ],
+      "title": "LoreEntry",
+      "type": "object"
+    },
+    "Opening": {
+      "additionalProperties": false,
+      "description": "How one conversation with this character begins: who the user is to the character.\n\n`prologue` is shown to the user before the chat and never sent to the model. `situation`\nis what the character knows about how the chat began. Without a greeting the user writes\nfirst. `{어제}`, `{오늘}`, `{내일}` in the situation and state become dates at creation.",
+      "properties": {
+        "opening_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "title": "Opening Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "prologue": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prologue"
+        },
+        "situation": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Situation",
+          "type": "string"
+        },
+        "greeting": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Greeting"
+        },
+        "start_stage": {
+          "title": "Start Stage",
+          "type": "string"
+        },
+        "state": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/OpeningNote"
+          },
+          "maxItems": 6,
+          "title": "State",
+          "type": "array"
+        }
+      },
+      "required": [
+        "opening_id",
+        "title",
+        "situation",
+        "start_stage"
+      ],
+      "title": "Opening",
+      "type": "object"
+    },
+    "OpeningNote": {
+      "additionalProperties": false,
+      "description": "A fact the opening establishes, seeded into the notebook when the conversation starts.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "work_state",
+            "commitment",
+            "relationship"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "key": {
+          "maxLength": 80,
+          "pattern": "^[a-z0-9_.-]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "key",
+        "text"
+      ],
+      "title": "OpeningNote",
+      "type": "object"
+    },
+    "RelationshipStage": {
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "behavior": {
+          "title": "Behavior",
+          "type": "string"
+        },
+        "entry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entry"
+        },
+        "mutual": {
+          "default": false,
+          "title": "Mutual",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stage",
+        "behavior"
+      ],
+      "title": "RelationshipStage",
+      "type": "object"
+    },
+    "RoutineSlot": {
+      "additionalProperties": false,
+      "description": "What the character is usually doing; `days` uses 0=Monday, empty means every day.",
+      "properties": {
+        "days": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Days",
+          "type": "array"
+        },
+        "start": {
+          "format": "time",
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "format": "time",
+          "title": "End",
+          "type": "string"
+        },
+        "doing": {
+          "title": "Doing",
+          "type": "string"
+        },
+        "place": {
+          "anyOf": [
+            {
+              "maxLength": 30,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "doing"
+      ],
+      "title": "RoutineSlot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "character-card/v2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "character_id": {
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+      "title": "Character Id",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "identity": {
+      "$ref": "#/$defs/CardIdentity"
+    },
+    "premise": {
+      "title": "Premise",
+      "type": "string"
+    },
+    "background": {
+      "title": "Background",
+      "type": "string"
+    },
+    "appearance": {
+      "anyOf": [
+        {
+          "maxLength": 800,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Appearance"
+    },
+    "values": {
+      "items": {
+        "$ref": "#/$defs/CardValue"
+      },
+      "title": "Values",
+      "type": "array"
+    },
+    "value_conflicts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Value Conflicts",
+      "type": "array"
+    },
+    "drives": {
+      "$ref": "#/$defs/CardDrives"
+    },
+    "flaws_in_behavior": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Flaws In Behavior",
+      "type": "array"
+    },
+    "opinions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Opinions",
+      "type": "array"
+    },
+    "voice": {
+      "$ref": "#/$defs/CardVoice"
+    },
+    "facts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Facts",
+      "type": "array"
+    },
+    "routine": {
+      "items": {
+        "$ref": "#/$defs/RoutineSlot"
+      },
+      "title": "Routine",
+      "type": "array"
+    },
+    "lore": {
+      "items": {
+        "$ref": "#/$defs/LoreEntry"
+      },
+      "title": "Lore",
+      "type": "array"
+    },
+    "relationship_stages": {
+      "items": {
+        "$ref": "#/$defs/RelationshipStage"
+      },
+      "title": "Relationship Stages",
+      "type": "array"
+    },
+    "canon_policy": {
+      "$ref": "#/$defs/CanonPolicy"
+    },
+    "greeting": {
+      "minLength": 1,
+      "title": "Greeting",
+      "type": "string"
+    },
+    "examples": {
+      "items": {
+        "$ref": "#/$defs/ExampleExchange"
+      },
+      "maxItems": 6,
+      "minItems": 2,
+      "title": "Examples",
+      "type": "array"
+    },
+    "openings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Opening"
+      },
+      "maxItems": 8,
+      "title": "Openings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "character_id",
+    "version",
+    "identity",
+    "premise",
+    "background",
+    "values",
+    "value_conflicts",
+    "drives",
+    "flaws_in_behavior",
+    "opinions",
+    "voice",
+    "facts",
+    "routine",
+    "lore",
+    "relationship_stages",
+    "canon_policy",
+    "greeting",
+    "examples"
+  ],
+  "title": "CharacterCardV2",
+  "type": "object"
+}

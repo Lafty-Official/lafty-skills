@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "Rating": {
+      "enum": [
+        "all",
+        "15",
+        "19"
+      ],
+      "title": "Rating",
+      "type": "string"
+    },
+    "SerialStatus": {
+      "description": "Where a work's writing stands, as its creator says; none says nothing.",
+      "enum": [
+        "ongoing",
+        "paused",
+        "finished"
+      ],
+      "title": "SerialStatus",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "title": {
+      "maxLength": 80,
+      "title": "Title",
+      "type": "string"
+    },
+    "logline": {
+      "default": "",
+      "maxLength": 160,
+      "title": "Logline",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "maxLength": 6000,
+      "title": "Description",
+      "type": "string"
+    },
+    "notice": {
+      "default": "",
+      "maxLength": 1000,
+      "title": "Notice",
+      "type": "string"
+    },
+    "lead_intro": {
+      "default": "",
+      "maxLength": 240,
+      "title": "Lead Intro",
+      "type": "string"
+    },
+    "serial": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SerialStatus"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "genres": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 6,
+      "title": "Genres",
+      "type": "array"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 21,
+      "title": "Tags",
+      "type": "array"
+    },
+    "rating": {
+      "$ref": "#/$defs/Rating",
+      "default": "all"
+    },
+    "derivative": {
+      "default": false,
+      "title": "Derivative",
+      "type": "boolean"
+    },
+    "source": {
+      "default": "",
+      "maxLength": 120,
+      "title": "Source",
+      "type": "string"
+    },
+    "color": {
+      "anyOf": [
+        {
+          "maxLength": 16,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Color"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "title": "WorkInfoInput",
+  "type": "object"
+}
