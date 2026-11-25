@@ -23,9 +23,21 @@ FOREIGN = re.compile(r"\{\{user\}\}|\{\{char\}\}|\{player\}|<user>|<char>", re.I
 STARTS_AND_ENDS = re.compile(r"\S고, .*(끝난다|끝나고|정리된다|마무리된다|가라앉는다)")
 GAUGE_WORDS = ("호감", "애정", "관계")
 PLAYER_WIDGET = re.compile(r"^p\d+$")
-# A clock time the app can read: 09:00 or 09:00:00, and never 24:00 or 99:99.
+# A clock time the app can read: 09:00 or 09:00:00, and never 99:99. 24:00 only ends a slot:
+# the app reads it as 23:59, and a slot ending at 23:59 runs to midnight.
 TIME = re.compile(r"(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?")
+MIDNIGHT = ("24:00", "24:00:00")
+LAST_MINUTE = 23 * 60 + 59
 SPEAKER = re.compile(r"^\[([^:\]]+):([^\]]+)\]", re.M)
+# A picture written into a work's introduction, as Markdown shows one.
+PICTURE_MARK = re.compile(r"!\[[^\]\n]*\]\([^)\n]*\)")
+# A spoken line as the story screen reads one: a tag at a line's start, or written after
+# narration right before a quote. A first scene with none shows no portrait.
+SPOKEN = re.compile(
+    r"^\s*\[[^\[\]:\n]{1,12}(?::[^\[\]\n]{1,10})?\]\s*\S"
+    r"|\S\s*\[[^\[\]:\n]{1,12}(?::[^\[\]\n]{1,10})?\]\s*[\"“]",
+    re.M,
+)
 # The app's faces for a supporting role that names none.
 NPC_FACES = ["기본"]
 # A section of the file only; the studio keeps it as two fields of the work's page.
@@ -155,7 +167,8 @@ def problems(value: object, node: dict, root: dict, path: str) -> list[tuple[str
             found.append((path, f"{high}자 이하로 줄이세요(지금 {len(value)}자)"))
         if "pattern" in node and not re.search(node["pattern"], value):
             found.append((path, "쓸 수 없는 글자가 있어요(대괄호, 콜론, 줄바꿈, 한글 ID 등)"))
-        if node.get("format") == "time" and not TIME.fullmatch(value):
+        ends = path.endswith(".end") and value in MIDNIGHT
+        if node.get("format") == "time" and not TIME.fullmatch(value) and not ends:
             found.append((path, "시각은 09:00 형식이에요"))
         if node.get("format") == "date-time" and not is_datetime(value):
             found.append((path, "시각은 2026-12-18T19:20:00 형식이에요(시간대 없이)"))
@@ -220,7 +233,10 @@ def minutes(text: str) -> int:
 def covers(slot: dict, day: int, minute: int) -> bool:
     if slot.get("days") and day not in slot["days"]:
         return False
-    start, end = minutes(slot["start"]), minutes(slot["end"])
+    start = minutes(slot["start"])
+    end = LAST_MINUTE if slot["end"] in MIDNIGHT else minutes(slot["end"])
+    if start <= end == LAST_MINUTE:
+        return start <= minute
     if start <= end:
         return start <= minute < end
     return minute >= start or minute < end
@@ -413,6 +429,12 @@ def check_lessons(report: Report, story: dict, card: dict | None) -> None:
                 "story.start.first_message",
                 f"[{name}:{expression}]: 그 인물의 표정 목록에 없는 이름이에요",
             )
+    if opening.strip() and not SPOKEN.search(opening):
+        report.warn(
+            "story.start.first_message",
+            "대사 앞에 [이름:표정]이 없어요. "
+            "이대로면 답장에도 표정 그림이 붙은 대사가 잘 나오지 않아요",
+        )
     if "*" in opening:
         report.warn("story.start.first_message", "별표로 서술을 감싸지 않아요")
 
@@ -747,6 +769,13 @@ def check_info(report: Report, info: dict, derivative: dict | None, limits: dict
         report.error("info.logline", f"한 줄 소개는 {limits['logline']}자까지예요")
     if len(info.get("description") or "") > limits["description"]:
         report.error("info.description", f"소개글은 {limits['description']}자까지예요")
+    if PICTURE_MARK.search(info.get("description") or ""):
+        # The studio takes no picture mark in a new file: its pictures are the work's own.
+        report.error(
+            "info.description",
+            "소개글에 사진 표시(![…](…))를 쓰지 않아요. 사진은 들어온 뒤 작품 정보 탭의 "
+            "'사진 넣기'로 넣어요",
+        )
     genres = info.get("genres") or []
     low, high = limits["genres"]
     if not low <= len(genres) <= high:
@@ -1136,6 +1165,12 @@ def check_bundle(bundle: dict, assets: Path = ASSETS) -> Report:
     if info is not None:
         if fits(report, info, schema_of(assets, "work-info.schema.json"), "info"):
             check_info(report, info, derivative, limits)
+        if story is None:
+            report.warn(
+                "story",
+                "스토리가 없어서 게시할 수 없는 작품 초안이 돼요. 캐릭터만 만들 거면 "
+                "work/info.json과 work/derivative.json을 지우세요",
+            )
     elif story is not None or one is not None:
         report.error("info", "작품 정보가 없어요")
     check_text(report, {"character": card, "story": story, "one_on_one": one}, "")
