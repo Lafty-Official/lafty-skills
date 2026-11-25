@@ -98,7 +98,7 @@
     },
     "CardStage": {
       "additionalProperties": false,
-      "description": "A line of a card's 「가까워지면 달라지는 모습」: a story's stage in shape, named apart\nso the studio tells it as a guide to how the character changes, not as a step.",
+      "description": "A line of a card's 「관계 변화」: a story's stage in shape, named apart\nso the studio tells it as a guide to how the character changes, not as a step.",
       "properties": {
         "stage": {
           "title": "Stage",

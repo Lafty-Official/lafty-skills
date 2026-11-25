@@ -299,7 +299,7 @@ def card_chars(card: dict) -> int:
         "## 하루\n" + bullets(routine(slot) for slot in card["routine"]),
         "## 아는 사람과 장소\n"
         + bullets(f"{entry['topic']}: {entry['content']}" for entry in card["lore"]),
-        # 「가까워지면 달라지는 모습」: none is fine, and then the part is not there.
+        # 「관계 변화」: none is fine, and then the part is not there.
         "## 관계가 깊어지는 단계\n"
         + bullets(f"{item['stage']}: {item['behavior']}" for item in closer)
         if closer
@@ -331,7 +331,7 @@ def check_card(report: Report, card: dict, sizes: dict) -> None:
         report.error(
             "character",
             f"카드가 너무 길어요(AI가 읽는 글 {chars:,}자). {sizes['chars']:,}자까지 쓸 수 있어요. "
-            "작품마다 달라지는 설정은 작품의 '이 이야기에서의 역할'과 무대, 이벤트로 옮기세요",
+            "작품마다 달라지는 설정은 작품의 '작품 내 역할'과 무대, 이벤트로 옮기세요",
         )
     elif chars > high:
         report.warn(
@@ -437,9 +437,9 @@ def check_adults(report: Report, bundle: dict, card: dict, adult_age: int, main_
         )
 
 
-# Words naming lovers in a stage's 「어떤 사이일 때」. A card's 「가까워지면 달라지는 모습」 has
-# no `mutual` since 0.1.11, so its lines tell a romance only by name; a line that keeps the
-# character from one says so in its 「모습」, which is not read here.
+# Words naming lovers in a stage's 「사이」. A card's 「관계 변화」 has no `mutual` since
+# 0.1.11, so its lines tell a romance only by name; a line that keeps the character from one
+# says so in its 「달라지는 태도」, which is not read here.
 ROMANCE_WORDS = ("연인", "연애")
 
 
