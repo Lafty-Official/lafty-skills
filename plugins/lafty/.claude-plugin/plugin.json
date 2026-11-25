@@ -1,7 +1,7 @@
 {
   "name": "lafty",
   "displayName": "Lafty",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "소설 쓰기(lafty-novel)와 라프티 작품 파일 만들기(lafty-studio)",
   "author": {
     "name": "Lafty"

@@ -96,6 +96,43 @@
       "title": "CardIdentity",
       "type": "object"
     },
+    "CardStage": {
+      "additionalProperties": false,
+      "description": "A line of a card's 「가까워지면 달라지는 모습」: a story's stage in shape, named apart\nso the studio tells it as a guide to how the character changes, not as a step.",
+      "properties": {
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "behavior": {
+          "title": "Behavior",
+          "type": "string"
+        },
+        "entry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entry"
+        },
+        "mutual": {
+          "default": false,
+          "title": "Mutual",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stage",
+        "behavior"
+      ],
+      "title": "CardStage",
+      "type": "object"
+    },
     "CardValue": {
       "additionalProperties": false,
       "properties": {
@@ -222,7 +259,7 @@
     },
     "Opening": {
       "additionalProperties": false,
-      "description": "How one conversation with this character begins: who the user is to the character.\n\n`prologue` is shown to the user before the chat and never sent to the model. `situation`\nis what the character knows about how the chat began. Without a greeting the user writes\nfirst. `{어제}`, `{오늘}`, `{내일}` in the situation and state become dates at creation.",
+      "description": "How one conversation with this character begins: who the user is to the character.\n\n`prologue` is shown to the user before the chat and never sent to the model. `situation`\nis what the character knows about how the chat began. Without a greeting the DM's\ncharacter writes its own first message, or with `reader_first` the user writes first.\n`{어제}`, `{오늘}`, `{내일}` in the situation and state become dates at creation.",
       "properties": {
         "opening_id": {
           "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
@@ -267,8 +304,21 @@
           "title": "Greeting"
         },
         "start_stage": {
-          "title": "Start Stage",
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Stage"
+        },
+        "reader_first": {
+          "default": false,
+          "title": "Reader First",
+          "type": "boolean"
         },
         "state": {
           "default": [],
@@ -283,8 +333,7 @@
       "required": [
         "opening_id",
         "title",
-        "situation",
-        "start_stage"
+        "situation"
       ],
       "title": "Opening",
       "type": "object"
@@ -321,42 +370,6 @@
         "text"
       ],
       "title": "OpeningNote",
-      "type": "object"
-    },
-    "RelationshipStage": {
-      "additionalProperties": false,
-      "properties": {
-        "stage": {
-          "title": "Stage",
-          "type": "string"
-        },
-        "behavior": {
-          "title": "Behavior",
-          "type": "string"
-        },
-        "entry": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entry"
-        },
-        "mutual": {
-          "default": false,
-          "title": "Mutual",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "stage",
-        "behavior"
-      ],
-      "title": "RelationshipStage",
       "type": "object"
     },
     "RoutineSlot": {
@@ -506,8 +519,9 @@
       "type": "array"
     },
     "relationship_stages": {
+      "default": [],
       "items": {
-        "$ref": "#/$defs/RelationshipStage"
+        "$ref": "#/$defs/CardStage"
       },
       "title": "Relationship Stages",
       "type": "array"
@@ -516,9 +530,17 @@
       "$ref": "#/$defs/CanonPolicy"
     },
     "greeting": {
-      "minLength": 1,
-      "title": "Greeting",
-      "type": "string"
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Greeting"
     },
     "examples": {
       "items": {
@@ -555,9 +577,7 @@
     "facts",
     "routine",
     "lore",
-    "relationship_stages",
     "canon_policy",
-    "greeting",
     "examples"
   ],
   "title": "CharacterCardV2",

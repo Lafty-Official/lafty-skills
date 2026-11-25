@@ -280,6 +280,7 @@ def card_chars(card: dict) -> int:
 
     looks = f"\n\n외모: {card['appearance']}" if card.get("appearance") else ""
     drives, voice, canon = card["drives"], card["voice"], card["canon_policy"]
+    closer = card.get("relationship_stages") or []
     sections = [
         f"# {name}\n{card['premise']}\n{age}{card['identity']['role']}. "
         f"{card['identity']['world']}.\n\n{card['background']}{looks}",
@@ -298,8 +299,11 @@ def card_chars(card: dict) -> int:
         "## 하루\n" + bullets(routine(slot) for slot in card["routine"]),
         "## 아는 사람과 장소\n"
         + bullets(f"{entry['topic']}: {entry['content']}" for entry in card["lore"]),
+        # 「가까워지면 달라지는 모습」: none is fine, and then the part is not there.
         "## 관계가 깊어지는 단계\n"
-        + bullets(f"{item['stage']}: {item['behavior']}" for item in card["relationship_stages"]),
+        + bullets(f"{item['stage']}: {item['behavior']}" for item in closer)
+        if closer
+        else None,
         "## 지어내도 되는 것과 안 되는 것\n"
         f"- 바뀌지 않는 정본: {', '.join(canon['fixed'])}\n"
         f"- 지어내도 되지만 한 번 말하면 지키는 것: {', '.join(canon['improvisable'])}\n"
@@ -307,21 +311,18 @@ def card_chars(card: dict) -> int:
         "## 목소리 예시 (실제로 있었던 일이 아니며 문장을 그대로 쓰지 않는다)\n"
         + "\n\n".join(example(item) for item in card["examples"]),
     ]
-    return len("\n\n".join(sections))
+    return len("\n\n".join(section for section in sections if section is not None))
 
 
 def check_card(report: Report, card: dict, sizes: dict) -> None:
-    if card["greeting"].rstrip().endswith("?"):
+    # The first words and how the character changes as the two grow closer may be left out:
+    # with no meeting and no greeting, the reader writes first.
+    if (card.get("greeting") or "").rstrip().endswith("?"):
         report.error("character.greeting", "첫 인사는 물음표로 끝나면 안 돼요")
-    if not card["relationship_stages"]:
-        report.error("character.relationship_stages", "관계 단계를 하나 이상 넣으세요")
-    stages = {item["stage"] for item in card["relationship_stages"]}
     openings = card.get("openings") or []
     unique(report, "character.openings", "만남 ID", [item["opening_id"] for item in openings])
     for index, opening in enumerate(openings):
         where = f"character.openings[{index}]"
-        if opening["start_stage"] not in stages:
-            report.error(f"{where}.start_stage", "관계 단계 목록에 있는 이름을 쓰세요")
         if (opening.get("greeting") or "").rstrip().endswith("?"):
             report.error(f"{where}.greeting", "첫 메시지는 물음표로 끝나면 안 돼요")
     check_routine(report, card["routine"])
@@ -429,12 +430,38 @@ def check_adults(report: Report, bundle: dict, card: dict, adult_age: int, main_
         report.error(
             "character.identity.age", f"19 작품의 메인은 숫자 나이 {main_age}세 이상이어야 해요"
         )
-    romance = any(item.get("mutual") for item in card["relationship_stages"])
-    if romance and (years is None or years < adult_age):
+    if romance_in(bundle, card) and (years is None or years < adult_age):
         report.warn(
             "character.identity.age",
-            f"연애로 이어지는 단계가 있어요. 성인({adult_age}세 이상)으로 두고 나이를 숫자로 쓰세요",
+            f"연애로 이어지는 관계가 있어요. 성인({adult_age}세 이상)으로 두고 나이를 숫자로 쓰세요",
         )
+
+
+# Words naming lovers in a stage's 「어떤 사이일 때」. A card's 「가까워지면 달라지는 모습」 has
+# no `mutual` since 0.1.11, so its lines tell a romance only by name; a line that keeps the
+# character from one says so in its 「모습」, which is not read here.
+ROMANCE_WORDS = ("연인", "연애")
+
+
+def romance_in(bundle: dict, card: dict) -> bool:
+    """Whether the main's romance shows anywhere: a stage that needs both people's words (an
+    older card's, or the story's), or a card or story stage named for lovers."""
+    story = bundle.get("story")
+    relationship = story.get("relationship") if isinstance(story, dict) else None
+    told = relationship.get("stages") if isinstance(relationship, dict) else None
+    stages = [
+        item
+        for item in [
+            *(card.get("relationship_stages") or []),
+            *(told if isinstance(told, list) else []),
+        ]
+        if isinstance(item, dict)
+    ]
+    return any(
+        item.get("mutual") is True
+        or any(word in str(item.get("stage") or "") for word in ROMANCE_WORDS)
+        for item in stages
+    )
 
 
 def about_known(about: str, npcs: set[str]) -> bool:
@@ -645,18 +672,11 @@ def check_story(report: Report, story: dict, card: dict | None) -> None:
         report.error("story.player.default_name", "등장인물 이름과 겹쳐요")
     if lead["character_id"] != card["character_id"]:
         report.error("story.lead.character_id", "character의 character_id와 같아야 해요")
-    card_stages = [item["stage"] for item in card["relationship_stages"]]
+    card_stages = [item["stage"] for item in card.get("relationship_stages") or []]
     mapped = relationship.get("card_stages") or {}
     for target in mapped.values():
         if target not in card_stages:
             report.error("story.relationship.card_stages", f"카드의 단계가 아니에요: {target}")
-    unmapped = [item for item in stages if item not in mapped and item not in card_stages]
-    if unmapped:
-        report.warn(
-            "story.relationship",
-            f"카드에 같은 이름이 없는 단계: {', '.join(unmapped)}. 이름을 맞추거나 "
-            "relationship.card_stages로 이어 주세요",
-        )
     first_chapter = chapters[0]["chapter_id"]
     for npc in npcs:
         early = [
@@ -679,7 +699,7 @@ def check_one_on_one(report: Report, one: dict, story: dict | None, card: dict |
             report.error(f"one_on_one.{key}", "규격에 없는 항목이에요")
     if card is None:
         return
-    stages = {item["stage"]: item for item in card["relationship_stages"]}
+    stages = {item["stage"]: item for item in card.get("relationship_stages") or []}
     opening = one.get("opening")
     openings = {item["opening_id"] for item in card.get("openings") or []}
     if opening not in (None, "none") and opening not in openings:
